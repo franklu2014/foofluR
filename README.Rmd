@@ -22,39 +22,44 @@ The goal of foofluR is to ...
 
 ## Installation
 
-You can install the released version of foofluR from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("foofluR")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("franklu2014/foofluR")
 ```
-## Example
+### Quick demo
 
-This is a basic example which shows you how to solve a common problem:
+Binding two factors via `fbind()`:
 
-```{r example}
+```{r}
 library(foofluR)
-## basic example code
+a <- factor(c("character", "hits", "your", "eyeballs"))
+b <- factor(c("but", "integer", "where it", "counts"))
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+Simply catenating two factors leads to a result that most don't expect.
 
-```{r cars}
-summary(cars)
+```{r}
+c(a, b)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+The `fbind()` function glues two factors together and returns factor.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r}
+fbind(a, b)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+Often we want a table of frequencies for the levels of a factor. The base `table()` function returns an object of class `table`, which can be inconvenient for downstream work.
+
+```{r}
+set.seed(1234)
+x <- factor(sample(letters[1:5], size = 100, replace = TRUE))
+table(x)
+```
+
+The `fcount()` function returns a frequency table as a tibble with a column of factor levels and another of frequencies:
+
+```{r}
+fcount(x)
+```
